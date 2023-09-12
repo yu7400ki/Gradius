@@ -22,6 +22,11 @@ export class Gradius implements Game {
 
   update() {
     this.me.move(this.inputState.move);
+    if (this.inputState.shoot) {
+      this.me.shoot();
+    } else {
+      this.me.idle();
+    }
     this.me.update();
   }
 

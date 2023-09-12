@@ -2,6 +2,7 @@ import { Point } from "./point";
 
 export class InputState {
   move: Point = new Point(0, 0);
+  shoot = false;
 
   private pressedKey = new Map<string, KeyboardEvent>();
   readonly target: HTMLElement | (Window & typeof globalThis);
@@ -42,6 +43,8 @@ export class InputState {
       this.move.x = deltaX;
       this.move.y = deltaY;
     }
+
+    this.shoot = this.isPressed(" ");
   }
 
   isPressed(key: string) {
