@@ -6,7 +6,9 @@ import { css } from "@styled-system/css";
 
 const Game = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const game = useRef<Gradius>(new Gradius());
+  const gradius = useRef<Gradius>(
+    new Gradius(window.innerWidth, window.innerHeight),
+  );
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -18,8 +20,9 @@ const Game = () => {
       throw new Error("Canvas context not found");
     }
 
+    const game = gradius.current;
     let loop: GameLoop | null = null;
-    GameLoop.start(game.current, ctx)
+    GameLoop.start(game, ctx)
       .then((l) => {
         loop = l;
       })
@@ -29,6 +32,7 @@ const Game = () => {
 
     return () => {
       loop?.stop();
+      game.stop();
     };
   }, []);
 
@@ -45,6 +49,7 @@ const Game = () => {
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
+    window.dispatchEvent(new Event("resize"));
     return () => {
       window.removeEventListener("resize", handleResize);
     };

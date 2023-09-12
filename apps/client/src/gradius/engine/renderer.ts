@@ -16,7 +16,7 @@ export class Renderer {
     );
   }
 
-  drawImage(image: HTMLImageElement, frame: Rect) {
+  drawImage(image: HTMLImageElement | HTMLCanvasElement, frame: Rect) {
     this.context.drawImage(
       image,
       frame.point.x,

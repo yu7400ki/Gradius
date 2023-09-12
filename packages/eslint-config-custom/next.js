@@ -51,5 +51,6 @@ module.exports = {
     "no-console": "off",
     "import/no-extraneous-dependencies": "off",
     "react/function-component-definition": "off",
+    "@typescript-eslint/no-confusing-void-expression": "off",
   },
 };
