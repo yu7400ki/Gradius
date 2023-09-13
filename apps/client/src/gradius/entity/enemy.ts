@@ -49,6 +49,13 @@ export class Enemy implements Entity {
     );
   }
 
+  checkCollision(entity: Entity) {
+    if (this.box.intersects(entity.box)) {
+      entity.onCollision?.(this);
+      this.onCollision(entity);
+    }
+  }
+
   draw(renderer: Renderer) {
     renderer.drawImage(Enemy.enemy, this.box);
     // renderer.drawRect(this.box);
@@ -59,6 +66,10 @@ export class Enemy implements Entity {
     if (!this.inScreen()) {
       this.delete();
     }
+  }
+
+  onCollision(_: Entity) {
+    this.delete();
   }
 
   delete() {

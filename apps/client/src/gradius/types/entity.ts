@@ -4,4 +4,5 @@ export interface Entity {
   update: () => void;
   draw: (renderer: Renderer) => void;
   box: Rect;
+  onCollision?: (entity: Entity) => void;
 }

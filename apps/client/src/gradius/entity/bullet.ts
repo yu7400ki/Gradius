@@ -66,6 +66,10 @@ export class Bullet implements Entity {
     }
   }
 
+  onCollision(_: Entity) {
+    this.delete();
+  }
+
   delete() {
     Bullet.manager.delete(this);
   }

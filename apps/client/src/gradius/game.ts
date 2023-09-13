@@ -38,6 +38,14 @@ export class Gradius implements Game {
     } else {
       this.me.idle();
     }
+    Enemy.manager.forEach((enemy) => {
+      Bullet.manager.forEach((bullet) => {
+        enemy.checkCollision(bullet);
+      });
+      Player.manager.forEach((player) => {
+        enemy.checkCollision(player);
+      });
+    });
     Player.manager.forEach((player) => player.update());
     Enemy.manager.forEach((enemy) => enemy.update());
     Bullet.manager.forEach((bullet) => bullet.update());
