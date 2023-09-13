@@ -10,4 +10,13 @@ export class Rect {
     this.width = width;
     this.height = height;
   }
+
+  intersects(rect: Rect) {
+    return (
+      this.point.x < rect.point.x + rect.width &&
+      this.point.x + this.width > rect.point.x &&
+      this.point.y < rect.point.y + rect.height &&
+      this.point.y + this.height > rect.point.y
+    );
+  }
 }
