@@ -25,4 +25,13 @@ export class Renderer {
       frame.height,
     );
   }
+
+  drawRect(rect: Rect) {
+    this.context.strokeRect(
+      rect.point.x,
+      rect.point.y,
+      rect.width,
+      rect.height,
+    );
+  }
 }

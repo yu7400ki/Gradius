@@ -1,6 +1,7 @@
 import { loadImage } from "../browser";
 import type { Renderer } from "../engine";
 import { Point, Rect } from "../engine";
+import { Bullet } from "./bullet";
 
 const SCALE = 2;
 const MOVE_SPEED = 5;
@@ -12,6 +13,7 @@ const Event = {
 export class Player {
   static WIDTH = 33 * SCALE;
   static HEIGHT = 36 * SCALE;
+  static manager = new Set<Player>();
   private static angleLeft = document.createElement("canvas");
   private static angleRight = document.createElement("canvas");
   private static initialized = false;
@@ -40,6 +42,10 @@ export class Player {
     Player.initialized = true;
   }
 
+  static deleteAll() {
+    Player.manager.clear();
+  }
+
   constructor(x: number, y: number, direction: "left" | "right") {
     if (!Player.initialized) {
       throw new Error("Player is not initialized");
@@ -48,6 +54,7 @@ export class Player {
     this.state = new PlayerStateIdle(
       new PlayerContext(new Point(x, y), new Point(0, 0), direction),
     );
+    Player.manager.add(this);
   }
 
   get box() {
@@ -60,6 +67,7 @@ export class Player {
         ? Player.angleRight
         : Player.angleLeft;
     renderer.drawImage(image, this.box);
+    // renderer.drawRect(this.box);
   }
 
   move(move: Point) {
@@ -76,6 +84,10 @@ export class Player {
 
   idle() {
     this.state = this.state.transition(Event.IDLE);
+  }
+
+  delete() {
+    Player.manager.delete(this);
   }
 }
 
@@ -145,7 +157,7 @@ class PlayerStateIdle implements PlayerState {
 }
 
 class PlayerStateShooting implements PlayerState {
-  frameCount = 10;
+  frameCount = 5;
   context: PlayerContext;
 
   constructor(context: PlayerContext) {
@@ -155,13 +167,27 @@ class PlayerStateShooting implements PlayerState {
   transition(event: (typeof Event)[keyof typeof Event]) {
     switch (event) {
       case Event.IDLE:
-        return this.idle();
+        if (this.context.frame === this.frameCount) {
+          return this.idle();
+        }
+      // fall through
       default:
         return this;
     }
   }
 
+  private shoot() {
+    const x =
+      this.context.position.x +
+      (this.context.direction === "right" ? Player.WIDTH : -Bullet.WIDTH);
+    const y = this.context.position.y + Player.HEIGHT / 2 - Bullet.HEIGHT / 2;
+    const _ = new Bullet(x, y, this.context.direction);
+  }
+
   update() {
+    if (this.context.frame === 0) {
+      this.shoot();
+    }
     this.context.update(this.frameCount);
     return this;
   }

@@ -1,7 +1,7 @@
 import { Point } from "./point";
 
 export class InputState {
-  move: Point = new Point(0, 0);
+  move = new Point(0, 0);
   shoot = false;
 
   private pressedKey = new Map<string, KeyboardEvent>();

@@ -1,6 +1,6 @@
 import type { Game } from "./types/game";
 import type { Renderer } from "./engine";
-import { Player } from "./entity";
+import { Player, Bullet } from "./entity";
 import { InputState } from "./engine";
 
 export class Gradius implements Game {
@@ -17,6 +17,7 @@ export class Gradius implements Game {
 
   async initialize() {
     await Player.initialize();
+    await Bullet.initialize();
     this.me = new Player(100, 100, "right");
   }
 
@@ -27,15 +28,19 @@ export class Gradius implements Game {
     } else {
       this.me.idle();
     }
-    this.me.update();
+    Player.manager.forEach((player) => player.update());
+    Bullet.manager.forEach((bullet) => bullet.update());
   }
 
   draw(renderer: Renderer): void {
     renderer.clear();
-    this.me.draw(renderer);
+    Player.manager.forEach((player) => player.draw(renderer));
+    Bullet.manager.forEach((bullet) => bullet.draw(renderer));
   }
 
   stop() {
     this.inputState.stop();
+    Player.deleteAll();
+    Bullet.deleteAll();
   }
 }
