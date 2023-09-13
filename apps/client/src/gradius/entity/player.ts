@@ -68,7 +68,10 @@ export class Player implements Entity {
         ? Player.angleRight
         : Player.angleLeft;
     renderer.drawImage(image, this.box);
-    // renderer.drawRect(this.box);
+  }
+
+  drawHitBox(renderer: Renderer) {
+    renderer.drawRect(this.box);
   }
 
   move(move: Point) {

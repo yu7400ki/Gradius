@@ -7,6 +7,7 @@ import { Boom } from "./effect/boom";
 export class Gradius implements Game {
   width: number;
   height: number;
+  debug = false;
 
   inputState = new InputState();
   me: Player;
@@ -61,6 +62,11 @@ export class Gradius implements Game {
     Enemy.manager.forEach((enemy) => enemy.draw(renderer));
     Bullet.manager.forEach((bullet) => bullet.draw(renderer));
     Boom.manager.forEach((boom) => boom.draw(renderer));
+    if (this.debug) {
+      Player.manager.forEach((player) => player.drawHitBox(renderer));
+      Enemy.manager.forEach((enemy) => enemy.drawHitBox(renderer));
+      Bullet.manager.forEach((bullet) => bullet.drawHitBox(renderer));
+    }
   }
 
   stop() {

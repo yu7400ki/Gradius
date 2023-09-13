@@ -56,7 +56,10 @@ export class Bullet implements Entity {
     const image =
       this.context.direction === "right" ? Bullet.bulletBlue : Bullet.bulletRed;
     renderer.drawImage(image, this.box);
-    // renderer.drawRect(this.box);
+  }
+
+  drawHitBox(renderer: Renderer) {
+    renderer.drawRect(this.box);
   }
 
   update() {

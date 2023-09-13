@@ -59,7 +59,10 @@ export class Enemy implements Entity {
 
   draw(renderer: Renderer) {
     renderer.drawImage(Enemy.enemy, this.box);
-    // renderer.drawRect(this.box);
+  }
+
+  drawHitBox(renderer: Renderer) {
+    renderer.drawRect(this.box);
   }
 
   update() {
