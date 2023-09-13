@@ -36,6 +36,7 @@ export class Gradius implements Game {
   }
 
   update() {
+    this.inputState.update();
     this.me.move(this.inputState.move);
     if (this.inputState.shoot) {
       this.me.shoot();
