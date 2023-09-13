@@ -3,6 +3,8 @@ import type { Renderer } from "../engine";
 import { Point, Rect } from "../engine";
 
 const SCALE = 2;
+const SCREEN_WIDTH = 1920;
+const SCREEN_HEIGHT = 1080;
 
 export class Bullet {
   static WIDTH = 7 * SCALE;
@@ -40,6 +42,15 @@ export class Bullet {
     return new Rect(this.context.position, Bullet.WIDTH, Bullet.HEIGHT);
   }
 
+  inScreen() {
+    return (
+      this.context.position.x + Bullet.WIDTH > 0 &&
+      this.context.position.x < SCREEN_WIDTH &&
+      this.context.position.y + Bullet.HEIGHT > 0 &&
+      this.context.position.y < SCREEN_HEIGHT
+    );
+  }
+
   draw(renderer: Renderer) {
     const image =
       this.context.direction === "right" ? Bullet.bulletBlue : Bullet.bulletRed;
@@ -49,6 +60,9 @@ export class Bullet {
 
   update() {
     this.context.update();
+    if (!this.inScreen()) {
+      this.delete();
+    }
   }
 
   delete() {
