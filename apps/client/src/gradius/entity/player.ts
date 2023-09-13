@@ -15,6 +15,7 @@ export class Player implements Entity {
   static WIDTH = 33 * SCALE;
   static HEIGHT = 36 * SCALE;
   static manager = new Set<Player>();
+  static shootSound = new Audio("/assets/sounds/shoot.mp3");
   private static angleLeft = document.createElement("canvas");
   private static angleRight = document.createElement("canvas");
   private static initialized = false;
@@ -53,7 +54,7 @@ export class Player implements Entity {
     }
 
     this.state = new PlayerStateIdle(
-      new PlayerContext(new Point(x, y), new Point(0, 0), direction),
+      new PlayerContext(new Point(x, y), new Point(0, 0), direction)
     );
     Player.manager.add(this);
   }
@@ -186,6 +187,10 @@ class PlayerStateShooting implements PlayerState {
       (this.context.direction === "right" ? Player.WIDTH : -Bullet.WIDTH);
     const y = this.context.position.y + Player.HEIGHT / 2 - Bullet.HEIGHT / 2;
     const _ = new Bullet(x, y, this.context.direction);
+    Player.shootSound.currentTime = 0;
+    Player.shootSound.play().catch((err) => {
+      console.error(err);
+    });
   }
 
   update() {
