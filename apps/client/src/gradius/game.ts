@@ -74,5 +74,7 @@ export class Gradius implements Game {
     Player.deleteAll();
     Bullet.deleteAll();
     Enemy.deleteAll();
+    Boom.deleteAll();
+    window.gradius = void 0;
   }
 }
