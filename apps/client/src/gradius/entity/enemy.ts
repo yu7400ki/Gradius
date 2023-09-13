@@ -2,6 +2,7 @@ import { loadImage } from "../browser";
 import type { Renderer } from "../engine";
 import { Point, Rect } from "../engine";
 import type { Entity } from "../types/entity";
+import { Boom } from "../effect";
 
 const SCALE = 3;
 const SCREEN_WIDTH = 1920;
@@ -69,6 +70,7 @@ export class Enemy implements Entity {
   }
 
   onCollision(_: Entity) {
+    const __ = new Boom(this.context.position.x, this.context.position.y);
     this.delete();
   }
 

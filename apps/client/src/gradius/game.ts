@@ -2,6 +2,7 @@ import type { Game } from "./types/game";
 import type { Renderer } from "./engine";
 import { Player, Bullet, Enemy } from "./entity";
 import { InputState } from "./engine";
+import { Boom } from "./effect/boom";
 
 export class Gradius implements Game {
   width: number;
@@ -19,6 +20,7 @@ export class Gradius implements Game {
     await Player.initialize();
     await Bullet.initialize();
     await Enemy.initialize();
+    await Boom.initialize();
     this.me = new Player(100, 100, "right");
     this.spawnEnemy();
   }
@@ -49,6 +51,7 @@ export class Gradius implements Game {
     Player.manager.forEach((player) => player.update());
     Enemy.manager.forEach((enemy) => enemy.update());
     Bullet.manager.forEach((bullet) => bullet.update());
+    Boom.manager.forEach((boom) => boom.update());
   }
 
   draw(renderer: Renderer): void {
@@ -56,6 +59,7 @@ export class Gradius implements Game {
     Player.manager.forEach((player) => player.draw(renderer));
     Enemy.manager.forEach((enemy) => enemy.draw(renderer));
     Bullet.manager.forEach((bullet) => bullet.draw(renderer));
+    Boom.manager.forEach((boom) => boom.draw(renderer));
   }
 
   stop() {
