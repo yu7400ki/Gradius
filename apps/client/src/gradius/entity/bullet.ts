@@ -1,12 +1,13 @@
 import { loadImage } from "../browser";
 import type { Renderer } from "../engine";
 import { Point, Rect } from "../engine";
+import type { Entity } from "../types/entity";
 
 const SCALE = 2;
 const SCREEN_WIDTH = 1920;
 const SCREEN_HEIGHT = 1080;
 
-export class Bullet {
+export class Bullet implements Entity {
   static WIDTH = 7 * SCALE;
   static HEIGHT = 7 * SCALE;
   static manager = new Set<Bullet>();

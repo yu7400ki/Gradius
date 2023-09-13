@@ -1,6 +1,7 @@
 import { loadImage } from "../browser";
 import type { Renderer } from "../engine";
 import { Point, Rect } from "../engine";
+import type { Entity } from "../types/entity";
 import { Bullet } from "./bullet";
 
 const SCALE = 2;
@@ -10,7 +11,7 @@ const Event = {
   SHOOTING: "SHOOTING",
 } as const;
 
-export class Player {
+export class Player implements Entity {
   static WIDTH = 33 * SCALE;
   static HEIGHT = 36 * SCALE;
   static manager = new Set<Player>();
