@@ -14,6 +14,7 @@ export class Gradius implements Game {
   constructor(width: number, height: number) {
     this.width = width;
     this.height = height;
+    window.gradius = this;
   }
 
   async initialize() {
